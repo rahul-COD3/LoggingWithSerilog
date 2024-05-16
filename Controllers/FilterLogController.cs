@@ -53,7 +53,7 @@ namespace LoggingWithSerilog.Controllers
         public IActionResult FilterMessageLogs(string message)
         {
             var logs = ReadLogFiles();
-            var filteredLogs = logs.Where(log => log.Key.MessageTemplate.Contains(message))
+            var filteredLogs = logs.Where(log => log.Key.MessageTemplate.ToLower().Contains(message.ToLower()))
                                    .Select(log => JObject.Parse(log.Value))
                                    .ToList();
             return Ok(FormatLogData(filteredLogs));
